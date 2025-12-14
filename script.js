@@ -418,8 +418,6 @@ function init() {
 
 function handleLoader() {
     const loader = document.getElementById('loader');
-    const loaderAr = document.getElementById('loader-ar');
-    const loaderEn = document.getElementById('loader-en');
 
     // Check if already shown in this session
     if (sessionStorage.getItem('annapoorna_loaded')) {
@@ -427,38 +425,43 @@ function handleLoader() {
         return;
     }
 
-    // Sequence:
-    // 0s: Start (Arabic hidden, EN hidden)
-    // 100ms: Arabic Fade In
-    // 1500ms: Arabic Fade Out
-    // 2000ms: English Fade In
-    // 3500ms: Loader Fade Out
+    const text = document.querySelector('.loader-text.en');
+    const idly = document.getElementById('shape-idly');
+    const vada = document.getElementById('shape-vada');
+    const dosa = document.getElementById('shape-dosa');
 
-    // 1. Show Arabic
+    // Sequence:
+    // 0s: Start
+    // 100ms: Show Text
+    // 600ms: Show Idly
+    // 1100ms: Show Vada
+    // 1600ms: Show Dosa
+    // 3500ms: Fade Out
+
     setTimeout(() => {
-        loaderAr.classList.add('show-text');
+        text.classList.add('show-item');
     }, 100);
 
-    // 2. Hide Arabic after 1.5s
     setTimeout(() => {
-        loaderAr.classList.remove('show-text');
-    }, 1500);
+        idly.classList.add('show-item');
+    }, 600);
 
-    // 3. Show English after Arabic fades (approx 2s mark)
     setTimeout(() => {
-        loaderEn.classList.add('show-wrapper');
-    }, 2000);
+        vada.classList.add('show-item');
+    }, 1100);
 
-    // 4. Fade out entire loader after 3.8s
+    setTimeout(() => {
+        dosa.classList.add('show-item');
+    }, 1600);
+
     setTimeout(() => {
         loader.classList.add('fade-out');
-    }, 3800);
+    }, 3500);
 
-    // 5. Remove from DOM
     setTimeout(() => {
         loader.style.display = 'none';
         sessionStorage.setItem('annapoorna_loaded', 'true');
-    }, 4600);
+    }, 4300);
 }
 
 function setupEventListeners() {
@@ -509,7 +512,14 @@ function setupEventListeners() {
 function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-    langText.textContent = currentLang === 'en' ? 'عربي' : 'English';
+
+    // Update Button with Flag and Text
+    if (currentLang === 'en') {
+        langToggle.innerHTML = '🇴🇲 <span class="lang-text">العربية</span>';
+    } else {
+        langToggle.innerHTML = '🇬🇧 <span class="lang-text">English</span>';
+    }
+
     updateLanguageUI();
 
     // Re-render current view to update text
