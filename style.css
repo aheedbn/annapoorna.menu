@@ -64,6 +64,9 @@ body[dir="rtl"] {
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .lang-toggle:active {
@@ -299,8 +302,8 @@ body[dir="rtl"] .back-btn svg {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #FFF8E7;
-    /* Warm cream / Sandal tone */
+    background-color: var(--primary-color);
+    /* Red Brand Color */
     z-index: 10000;
     display: flex;
     align-items: center;
@@ -313,6 +316,9 @@ body[dir="rtl"] .back-btn svg {
     position: relative;
     width: 100%;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .loader-text {
@@ -336,45 +342,85 @@ body[dir="rtl"] .back-btn svg {
 
 .loader-text.en {
     font-family: var(--font-en);
-    /* Reset properties so it's controlled by the wrapper */
-    opacity: 1;
-    position: static;
-    transform: none;
-}
-
-.loader-en-wrapper {
+    position: relative;
     opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-20px);
+    transition: all 0.8s ease-out;
+    color: #ffffff;
+    /* White Text */
+    margin-bottom: 2rem;
+}
+
+.loader-graphics {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 1.5rem;
     justify-content: center;
-    width: 100%;
+    align-items: center;
+    margin-top: 1rem;
 }
 
-.loader-icon {
-    font-size: 3rem;
-    margin-top: 0.5rem;
-    /* Reduced from 1rem to make them feel more 'together' */
-    animation: gentlePulse 2s infinite ease-in-out;
+.shape {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy pop */
 }
 
-@keyframes gentlePulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+/* Idly: White, Soft, Fluffy */
+.idly {
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    50% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
+/* Vada: Golden Brown Ring */
+.vada {
+    background-color: #D2691E;
+    /* Chocolate/Golden Brown */
+    border-radius: 50%;
+    position: relative;
+    box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+}
 
-    100% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+.vada::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    background-color: var(--primary-color);
+    /* Cutout matches background */
+    border-radius: 50%;
+}
+
+/* Dosa: Golden Triangle */
+.dosa {
+    width: 0;
+    height: 0;
+    background-color: transparent;
+    border-left: 35px solid transparent;
+    border-right: 35px solid transparent;
+    border-bottom: 60px solid #F4C430;
+    /* Saffron/Gold */
+    border-radius: 4px;
+    /* Soften edges slightly */
+    transform-origin: bottom center;
+}
+
+/* Sambar: Simple Bowl (Optional context) */
+.sambar {
+    background-color: #FF9800;
+    width: 50px;
+    height: 30px;
+    border-radius: 0 0 25px 25px;
+    /* Half circle bottom */
+    border: 3px solid #E65100;
+    display: none;
+    /* Keeping it simple as per request unless needed */
 }
 
 /* Helper classes for JS animation */
@@ -383,12 +429,12 @@ body[dir="rtl"] .back-btn svg {
     pointer-events: none;
 }
 
-.show-text {
+.show-item {
     opacity: 1 !important;
-    transform: translateY(-50%) scale(1) !important;
+    transform: scale(1) translateY(0) !important;
 }
 
-.show-wrapper {
-    opacity: 1 !important;
+/* Correction for Dosa Scale which starts at scale(0) */
+.dosa.show-item {
     transform: scale(1) !important;
 }
