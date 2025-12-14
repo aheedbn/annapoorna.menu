@@ -393,6 +393,7 @@ const langText = langToggle.querySelector('.lang-text');
 // Logic
 
 function init() {
+    handleLoader();
     setupEventListeners();
 
     // Initial Load Logic
@@ -403,7 +404,7 @@ function init() {
             renderItems(hash, false);
             // Ensure state is correct for back/forward navigation
             if (!history.state || history.state.view !== 'items') {
-                 history.replaceState({ view: 'items', categoryId: hash }, '', `#${hash}`);
+                history.replaceState({ view: 'items', categoryId: hash }, '', `#${hash}`);
             }
         } else {
             history.replaceState({ view: 'home' }, '', '#');
@@ -413,6 +414,51 @@ function init() {
         history.replaceState({ view: 'home' }, '', '#');
         renderHome(false);
     }
+}
+
+function handleLoader() {
+    const loader = document.getElementById('loader');
+    const loaderAr = document.getElementById('loader-ar');
+    const loaderEn = document.getElementById('loader-en');
+
+    // Check if already shown in this session
+    if (sessionStorage.getItem('annapoorna_loaded')) {
+        loader.style.display = 'none';
+        return;
+    }
+
+    // Sequence:
+    // 0s: Start (Arabic hidden, EN hidden)
+    // 100ms: Arabic Fade In
+    // 1500ms: Arabic Fade Out
+    // 2000ms: English Fade In
+    // 3500ms: Loader Fade Out
+
+    // 1. Show Arabic
+    setTimeout(() => {
+        loaderAr.classList.add('show-text');
+    }, 100);
+
+    // 2. Hide Arabic after 1.5s
+    setTimeout(() => {
+        loaderAr.classList.remove('show-text');
+    }, 1500);
+
+    // 3. Show English after Arabic fades (approx 2s mark)
+    setTimeout(() => {
+        loaderEn.classList.add('show-wrapper');
+    }, 2000);
+
+    // 4. Fade out entire loader after 3.8s
+    setTimeout(() => {
+        loader.classList.add('fade-out');
+    }, 3800);
+
+    // 5. Remove from DOM
+    setTimeout(() => {
+        loader.style.display = 'none';
+        sessionStorage.setItem('annapoorna_loaded', 'true');
+    }, 4600);
 }
 
 function setupEventListeners() {
