@@ -1,5 +1,6 @@
 :root {
-    --primary-color: #d32f2f; /* Red for appetite */
+    --primary-color: #d32f2f;
+    /* Red for appetite */
     --primary-dark: #b71c1c;
     --background-color: #f9f9f9;
     --card-bg: #ffffff;
@@ -24,7 +25,8 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.5;
-    padding-bottom: 80px; /* Space for footer */
+    padding-bottom: 80px;
+    /* Space for footer */
 }
 
 /* Bi-directional support */
@@ -42,7 +44,7 @@ body[dir="rtl"] {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .logo-text {
@@ -73,7 +75,8 @@ body[dir="rtl"] {
 .hero {
     height: 250px;
     position: relative;
-    background-image: url('https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?q=80&w=2080&auto=format&fit=crop'); /* Placeholder image */
+    background-image: url('https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?q=80&w=2080&auto=format&fit=crop');
+    /* Placeholder image */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -236,7 +239,7 @@ body[dir="rtl"] .back-btn svg {
 .contact-info {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-info a {
@@ -256,13 +259,25 @@ body[dir="rtl"] .back-btn svg {
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Media Queries */
@@ -270,9 +285,110 @@ body[dir="rtl"] .back-btn svg {
     .categories-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
-    
+
     #app {
         max-width: 800px;
         margin: 0 auto;
     }
+}
+
+/* Pre-page Loader */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFF8E7;
+    /* Warm cream / Sandal tone */
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.loader-content {
+    position: relative;
+    width: 100%;
+    padding: 2rem;
+}
+
+.loader-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    opacity: 0;
+    transform: scale(0.9);
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loader-text.ar {
+    font-family: var(--font-ar);
+    color: var(--primary-dark);
+}
+
+.loader-text.en {
+    font-family: var(--font-en);
+    /* Reset properties so it's controlled by the wrapper */
+    opacity: 1;
+    position: static;
+    transform: none;
+}
+
+.loader-en-wrapper {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.loader-icon {
+    font-size: 3rem;
+    margin-top: 0.5rem;
+    /* Reduced from 1rem to make them feel more 'together' */
+    animation: gentlePulse 2s infinite ease-in-out;
+}
+
+@keyframes gentlePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* Helper classes for JS animation */
+.loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.show-text {
+    opacity: 1 !important;
+    transform: translateY(-50%) scale(1) !important;
+}
+
+.show-wrapper {
+    opacity: 1 !important;
+    transform: scale(1) !important;
 }
