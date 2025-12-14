@@ -426,42 +426,24 @@ function handleLoader() {
     }
 
     const text = document.querySelector('.loader-text.en');
-    const idly = document.getElementById('shape-idly');
-    const vada = document.getElementById('shape-vada');
-    const dosa = document.getElementById('shape-dosa');
 
     // Sequence:
     // 0s: Start
     // 100ms: Show Text
-    // 600ms: Show Idly
-    // 1100ms: Show Vada
-    // 1600ms: Show Dosa
-    // 3500ms: Fade Out
+    // 2000ms: Fade Out
 
     setTimeout(() => {
         text.classList.add('show-item');
     }, 100);
 
     setTimeout(() => {
-        idly.classList.add('show-item');
-    }, 600);
-
-    setTimeout(() => {
-        vada.classList.add('show-item');
-    }, 1100);
-
-    setTimeout(() => {
-        dosa.classList.add('show-item');
-    }, 1600);
-
-    setTimeout(() => {
         loader.classList.add('fade-out');
-    }, 3500);
+    }, 2000);
 
     setTimeout(() => {
         loader.style.display = 'none';
         sessionStorage.setItem('annapoorna_loaded', 'true');
-    }, 4300);
+    }, 2800);
 }
 
 function setupEventListeners() {
